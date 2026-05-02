@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Shop</title>
+
+    <!-- SWIPER -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div id="menu-btn" class="fas fa-bars"></div>
+
+    <a href="#" class="logo">coffee <i class="fas fa-mug-hot"></i></a>
+
+    <nav class="navbar">
+        <a href="#home">home</a>
+        <a href="#about">about</a>
+        <a href="#menu">menu</a>
+        <a href="#review">review</a>
+        <a href="#book">book</a>
+    </nav>
+
+    <a href="#" class="btn">book a table</a>
+</header>
+
+<!-- HOME -->
+<section class="home" id="home">
+    <div class="row">
+        <div class="content">
+            <h3>fresh coffee in the morning</h3>
+            <a href="#" class="btn">buy one now</a>
+        </div>
+        <div class="image">
+            <img src="image/home-img-1.png" class="main-home-image">
+        </div>
+    </div>
+</section>
+
+<!-- MENU -->
+<section class="menu" id="menu">
+    <h1 class="heading">our menu <span>popular menu</span></h1>
+
+    <div class="box-container">
+
+        <div class="box">
+            <img src="image/menu-1.png">
+            <h3>coffee</h3>
+            <p>Fresh brewed classic coffee</p>
+            <span>$8.99</span>
+        </div>
+
+        <div class="box">
+            <img src="image/menu-2.png">
+            <h3>espresso</h3>
+            <p>Strong espresso shot</p>
+            <span>$10.99</span>
+        </div>
+
+        <div class="box">
+            <img src="image/menu-3.png">
+            <h3>latte</h3>
+            <p>Smooth milk coffee</p>
+            <span>$12.99</span>
+        </div>
+
+        <div class="box">
+            <img src="image/menu-4.png">
+            <h3>cappuccino</h3>
+            <p>Foamy creamy coffee</p>
+            <span>$11.99</span>
+        </div>
+
+        <div class="box">
+            <img src="image/menu-5.png">
+            <h3>mocha</h3>
+            <p>Chocolate coffee blend</p>
+            <span>$13.99</span>
+        </div>
+
+        <div class="box">
+            <img src="image/menu-6.png">
+            <h3>brownie</h3>
+            <p>Soft chocolate brownie</p>
+            <span>$9.49</span>
+        </div>
+
+    </div>
+</section>
+
+<!-- BOOK -->
+<section class="book" id="book">
+    <h1 class="heading">booking <span>reserve a table</span></h1>
+
+    <form>
+        <input type="text" placeholder="Name" class="box">
+        <input type="email" placeholder="Email" class="box">
+        <input type="number" placeholder="Number" class="box">
+        <textarea placeholder="Message" class="box"></textarea>
+        <input type="submit" value="Send Message" class="btn">
+    </form>
+</section>
+
+<!-- FOOTER -->
+<section class="footer">
+    <div class="credit">Created by You ☕</div>
+</section>
+
+<!-- 💬 CHATBOT -->
+<div class="chatbot-icon" id="chatbot-toggle">
+    <i class="fas fa-comments"></i>
+</div>
+
+<div class="chatbox" id="chatbox">
+    <div class="chat-header">Chat With Us</div>
+    <div class="chat-body" id="chat-body">
+        <p>Hi 👋 How can I help you?</p>
+    </div>
+    <input type="text" id="chat-input" placeholder="Type message...">
+</div>
+
+<!-- 🧾 BILL -->
+<div class="bill-box">
+    <div class="bill-header">Your Bill 🧾</div>
+
+    <ul id="bill-items">
+        <li>No items yet</li>
+    </ul>
+
+    <div>Total: $<span id="total">0.00</span></div>
+
+    <button id="download-bill">Download PDF</button>
+</div>
+
+<!-- SCRIPTS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+<script src="js/script.js"></script>
+
+</body>
+</html>
