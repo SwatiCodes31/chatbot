@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chef Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f5f5f5;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 20px;
+        }
+
+        #order-list {
+            width: 60%;
+            margin: 20px auto;
+            padding: 0;
+        }
+
+        .order-card {
+            list-style: none;
+            background: white;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pending {
+            color: red;
+            font-weight: bold;
+        }
+
+        .ready {
+            color: green;
+            font-weight: bold;
+        }
+
+        button {
+            padding: 8px 15px;
+            border: none;
+            background: #28a745;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>👨‍🍳 Chef Dashboard</h1>
+
+    <ul id="order-list"></ul>
+
+    <script src="js/chef.js"></script>
+
+</body>
+</html>

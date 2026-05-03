@@ -1,5 +1,5 @@
 // =======================
-// 🔊 SPEAK FUNCTION (RESTORED)
+// 🔊 SPEAK FUNCTION
 // =======================
 function speak(text) {
   const u = new SpeechSynthesisUtterance(text);
@@ -20,6 +20,7 @@ let menuItems = {
 };
 
 let totalBill = 0;
+let userOrders = []; // 🆕 track orders
 
 // =======================
 // 💬 DOM READY
@@ -47,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // 💬 CHATBOT
   // =======================
   if (input) {
-    input.addEventListener("keypress", function (e) {
+    input.addEventListener("keypress", async function (e) {
 
       if (e.key === "Enter" && input.value.trim() !== "") {
 
@@ -58,8 +59,8 @@ document.addEventListener("DOMContentLoaded", function () {
         chatBody.appendChild(userDiv);
 
         let reply = "";
-
         let found = null;
+
         for (let item in menuItems) {
           if (msg.includes(item)) {
             found = item;
@@ -68,6 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (found) {
+
           billBox.style.display = "block";
 
           totalBill += menuItems[found];
@@ -77,6 +79,16 @@ document.addEventListener("DOMContentLoaded", function () {
           billItems.appendChild(li);
 
           totalDisplay.textContent = totalBill.toFixed(2);
+
+          // 🆕 SAVE ORDER TO BACKEND
+          const res = await fetch("http://localhost:5000/api/order", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ item: found })
+          });
+
+          const data = await res.json();
+          userOrders.push(data.id);
 
           reply = `${found} added. Total ${totalBill}`;
           speak(reply);
@@ -144,7 +156,33 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // =======================
-// 🎤 FULL VOICE ASSISTANT (RESTORED)
+// 🔔 CHECK ORDER STATUS (NEW)
+// =======================
+async function checkOrderStatus() {
+  try {
+    const res = await fetch("http://localhost:5000/api/orders");
+    const data = await res.json();
+
+    data.forEach(order => {
+      if (order.status === "ready" && userOrders.includes(order.id)) {
+
+        alert("🎉 Your order is ready: " + order.item);
+
+        // remove so it doesn't repeat
+        userOrders = userOrders.filter(id => id !== order.id);
+      }
+    });
+
+  } catch (err) {
+    console.log("Error checking status", err);
+  }
+}
+
+// check every 3 sec
+setInterval(checkOrderStatus, 3000);
+
+// =======================
+// 🎤 VOICE ASSISTANT
 // =======================
 const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -160,7 +198,6 @@ function initVoice() {
   recognition.continuous = true;
 
   recognition.start();
-
   recognition.onend = () => recognition.start();
 
   recognition.onresult = async (event) => {
@@ -169,9 +206,8 @@ function initVoice() {
 
     console.log("Heard:", text);
 
-    // WAKE MODE
+    // WAKE
     if (mode === "wake") {
-
       if (text.includes("speak")) {
         speak("Voice assistant activated");
         mode = "assistant";
@@ -217,6 +253,16 @@ function initVoice() {
           totalBill += menuItems[item];
           totalDisplay.textContent = totalBill.toFixed(2);
 
+          // 🆕 SEND TO BACKEND
+          const res = await fetch("http://localhost:5000/api/order", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ item })
+          });
+
+          const data = await res.json();
+          userOrders.push(data.id);
+
           speak(`${item} added`);
         }
       }
@@ -225,7 +271,7 @@ function initVoice() {
       else speak(`Total is ${totalBill}`);
     }
 
-    // BOOKING
+    // BOOKING FLOW
     else if (voiceState === "book-name") {
       tempData.name = text;
       voiceState = "book-email";
@@ -270,3 +316,20 @@ window.onload = () => {
   speak("Welcome. Say speak to start");
   initVoice();
 };
+
+// 👨‍🍳 CHEF LOGIN BUTTON
+let chefBtn = document.getElementById("chef-login-btn");
+
+if (chefBtn) {
+  chefBtn.onclick = () => {
+
+    // simple demo password
+    let pass = prompt("Enter Chef Password:");
+
+    if (pass === "1234") {
+      window.open("chef.html", "_blank"); // open chef panel
+    } else {
+      alert("❌ Wrong password");
+    }
+  };
+}
